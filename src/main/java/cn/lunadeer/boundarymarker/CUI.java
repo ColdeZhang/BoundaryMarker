@@ -132,6 +132,17 @@ public class CUI {
             }
         });
 
+        panel.setButton(7, 0, new ButtonUI(
+                panel,
+                BoundaryMarkerAPI.createSkullByValue(rename_texture),
+                "将领地赠与他人") {
+            @Override
+            public void onClick() {
+                ChestUI panel = give_area_to(player,title, area);
+                panel.open();
+            }
+        });
+
         panel.setButton(8, 0, new ButtonUI(
                 panel,
                 BoundaryMarkerAPI.createSkullByValue(rename_texture),
@@ -482,6 +493,24 @@ public class CUI {
 
         }
         return PageUI.createPages(player, parent_name, "选择要添加的玩家", buttons);
+    }
+
+    private static ChestUI give_area_to(Player player, String parent_name, Area area) {
+        List<ButtonUI> buttons = new ArrayList<>();
+        for (Player onlinePlayer : BoundaryMarker.instance.getServer().getOnlinePlayers()) {
+            buttons.add(new ButtonUI(null,
+                    BoundaryMarkerAPI.getPlayerSkull(onlinePlayer),
+                    onlinePlayer.getName()) {
+                @Override
+                public void onClick() {
+                    area.setOwner_name(onlinePlayer.getUniqueId().toString());
+                    area.setOwner_name(onlinePlayer.getName());
+                    getBelong().close();
+                }
+            });
+
+        }
+        return PageUI.createPages(player, parent_name, "选择要赠与的玩家", buttons);
     }
 
     private static ChestUI role_remove_player(Player player, String parent_name, Area area, String role_name) {
