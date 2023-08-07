@@ -113,9 +113,7 @@ public class PlayerEvent implements Listener {
         if (event.getInventory().getType() == InventoryType.CHEST ||
                 event.getInventory().getType() == InventoryType.BARREL ||
                 event.getInventory().getType() == InventoryType.SHULKER_BOX ||
-                event.getInventory().getType() == InventoryType.ENDER_CHEST ||
-                event.getInventory().getType() == InventoryType.DROPPER ||
-                event.getInventory().getType() == InventoryType.DISPENSER
+                event.getInventory().getType() == InventoryType.ENDER_CHEST
         ) {
             XLogger.debug("container 触发 type" + event.getInventory().getType());
             if (BoundaryMarkerAPI.hasPermission(player, event.getInventory().getLocation(), Role::getContainer)) {
@@ -133,7 +131,9 @@ public class PlayerEvent implements Listener {
         if (event.getInventory().getLocation() == null) {
             return;
         }
-        if (event.getInventory().getType() == InventoryType.HOPPER) {
+        if (event.getInventory().getType() == InventoryType.HOPPER ||
+                event.getInventory().getType() == InventoryType.DROPPER ||
+                event.getInventory().getType() == InventoryType.DISPENSER) {
             XLogger.debug("hopper 触发 type" + event.getInventory().getType());
             if (BoundaryMarkerAPI.hasPermission(player, event.getInventory().getLocation(), Role::getHopper)) {
                 return;

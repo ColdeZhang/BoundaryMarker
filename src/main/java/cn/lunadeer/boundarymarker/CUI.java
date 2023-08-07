@@ -878,7 +878,7 @@ public class CUI {
         panel.setButton(23,
                 new ToggleButtonUI(panel,
                         BoundaryMarkerAPI.createSkullByValue(hopper_texture),
-                        "漏斗",
+                        "特殊容器（漏斗、漏斗矿车、发射器、投掷器）",
                         new ToggleButtonUI.Setting() {
                             @Override
                             public void set(Boolean status) {

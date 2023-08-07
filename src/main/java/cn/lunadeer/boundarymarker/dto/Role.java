@@ -28,7 +28,7 @@ public class Role {
     private Boolean riding = false;             // √ 是否可以骑乘
     private Boolean shear = false;              // 是否可以剪羊毛
     private Boolean shoot = false;              // 是否可以射箭
-    private Boolean hopper = false;             // 特殊容器（漏斗、漏斗矿车）
+    private Boolean hopper = false;             // 特殊容器（漏斗、漏斗矿车、发射器、投掷器）
     private Boolean trade = false;              // √ 是否可以交易
     private Boolean vehicle_destroy = false;    // 是否可以破坏载具
     private Boolean harvest = false;            // 是否可以收获
