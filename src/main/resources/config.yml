@@ -12,4 +12,7 @@ marker_id:
 
 max_marks_per_district: 10
 
+# 是否将区域渲染到BlueMap插件
+blue_map: false
+
 debug: false

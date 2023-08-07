@@ -54,6 +54,8 @@ public class CUI {
     private static final String vehicle_destroy_texture = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzQyMDcwYWNjODE0YmM5NDZlNTk4NzllYzdkYTQ1ZGU5ODRkM2VlOWExNTkzOTNkZWZiNTk4NTNhYmUzYjYifX19";
     private static final String harvest_texture = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjlmOTkxZjFmNzFiM2EzMzFmY2MxMmQ2ZTY0ZGZmMmU3MzdjOTcxZDllODhlOTcwYzc4N2UwZThjZDA2NDA4NiJ9fX0=";
     private static final String hopper_texture = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjhlODRmYTYzMTJlMDViZmY0OGNlZWM3NTBjZTViODUyNjkzOWNlZjYzYjZlZmE3YTUzOWE1YjFkMjVkMDViMCJ9fX0=";
+    private static final String creeper_texture = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTE1N2IxNjhjNzM3N2U4NzEzN2VhZDZmNzc4Y2FhZDE4ODM5OTBiNjFiZGQ1NzllMGM2YTljNTFmNWNjZmExZCJ9fX0=";
+
 
     public static void cities_main_page(Player player) {
         List<Area> areas = new ArrayList<>();
@@ -156,7 +158,7 @@ public class CUI {
         panel.setButton(0, 2,
                 new ToggleButtonUI(panel,
                         createSkullByValue(explode_texture),
-                        "是否允许爆炸", new ToggleButtonUI.Setting() {
+                        "是否允许TNT爆炸", new ToggleButtonUI.Setting() {
                     @Override
                     public void set(Boolean status) {
                         area.setExplode(status);
@@ -240,6 +242,21 @@ public class CUI {
                     @Override
                     public boolean status() {
                         return area.getTrample();
+                    }
+                }));
+
+        panel.setButton(0, 4,
+                new ToggleButtonUI(panel,
+                        createSkullByValue(creeper_texture),
+                        "是否允许生物爆炸（苦力怕、凋零）", new ToggleButtonUI.Setting() {
+                    @Override
+                    public void set(Boolean status) {
+                        area.setCreeper_explode(status);
+                    }
+
+                    @Override
+                    public boolean status() {
+                        return area.getCreeper_explode();
                     }
                 }));
 

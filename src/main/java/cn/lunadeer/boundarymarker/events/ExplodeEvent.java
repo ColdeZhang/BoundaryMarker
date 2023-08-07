@@ -26,8 +26,15 @@ public class ExplodeEvent implements Listener {
         if (area == null) {
             return;
         }
-        if (area.getExplode()) {
-            return;
+        if (entity.getType() == EntityType.MINECART_TNT || entity.getType() == EntityType.PRIMED_TNT) {
+            if (area.getExplode()) {
+                return;
+            }
+        }
+        if (entity.getType() == EntityType.CREEPER || entity.getType() == EntityType.WITHER_SKULL) {
+            if (area.getCreeper_explode()) {
+                return;
+            }
         }
         event.setCancelled(true);
     }
@@ -42,7 +49,7 @@ public class ExplodeEvent implements Listener {
         if (area == null) {
             return;
         }
-        if (area.getExplode()) {
+        if (area.getCreeper_explode()) {
             return;
         }
         event.setCancelled(true);

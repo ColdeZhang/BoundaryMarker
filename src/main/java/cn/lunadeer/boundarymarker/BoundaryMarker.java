@@ -47,6 +47,10 @@ public final class BoundaryMarker extends JavaPlugin {
         BoundaryMarkerAPI.runAtFixedRateAsync(this, () -> {
             Parser.Save(cache);
 
+            if (!config.blue_map()) {
+                return;
+            }
+
             BlueMapAPI.getInstance().ifPresent(api -> {
                 for (Map.Entry<String, Map<String, Area>> world_areas : cache.getAreas().entrySet()) {
                     api.getWorld(world_areas.getKey()).ifPresent(world -> {
@@ -69,8 +73,8 @@ public final class BoundaryMarker extends JavaPlugin {
                                     .label(area.getKey())
                                     .position(x, y, z)
                                     .shape(shape, area.getValue().getY_bottom(), area.getValue().getY_top())
-                                    .lineColor(new Color(0, 0, 255, 0.8F))
-                                    .fillColor(new Color(0, 0, 255, 0.2F))
+                                    .lineColor(new Color(0, 191, 255, 0.8F))
+                                    .fillColor(new Color(0, 191, 255, 0.2F))
                                     .build();
                             markerSet.getMarkers()
                                     .put(area.getKey(), marker);

@@ -21,6 +21,7 @@ public class Configuration {
         _marker_id_prefix = _file.getString("marker_id.prefix", "No.");
         _marker_id_suffix = _file.getString("marker_id.suffix", "*");
         _max_marks_per_district = _file.getInt("max_marks_per_district", 10);
+        _blue_map = _file.getBoolean("blue_map", false);
     }
 
     public void setDebug(Boolean debug) {
@@ -75,6 +76,16 @@ public class Configuration {
         return _max_marks_per_district;
     }
 
+    public void setBlueMap(Boolean blue_map) {
+        _blue_map = blue_map;
+        _file.set("blue_map", blue_map);
+        _plugin.saveConfig();
+    }
+
+    public Boolean blue_map() {
+        return _blue_map;
+    }
+
 
     public Boolean debug() {
         return _debug;
@@ -118,5 +129,7 @@ public class Configuration {
     private String _marker_id_suffix;
 
     private Integer _max_marks_per_district;
+
+    private Boolean _blue_map;
 
 }

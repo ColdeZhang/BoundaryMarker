@@ -34,7 +34,8 @@ public class Area {
 
     private Map<String, String> players_role = new HashMap<>();       // <player_uuid, role_name>
 
-    private Boolean explode = false;            // 行政区域内是否可以爆炸(苦力怕、TNT)
+    private Boolean explode = false;            // 行政区域内TNT是否可以爆炸
+    private Boolean creeper_explode = false;    // 行政区域内苦力怕是否可以爆炸
     private Boolean glow = true;                // 行政区域内玩家是否发光
     private Boolean water_flow = false;         // 行政区域内水是否会流动
     private Boolean lava_flow = false;          // 行政区域内岩浆是否会流动
