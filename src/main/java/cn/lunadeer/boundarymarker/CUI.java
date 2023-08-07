@@ -3,7 +3,6 @@ package cn.lunadeer.boundarymarker;
 import cn.lunadeer.boundarymarker.chestui.*;
 import cn.lunadeer.boundarymarker.dto.Area;
 import cn.lunadeer.boundarymarker.dto.Role;
-import com.mojang.authlib.GameProfile;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -17,7 +16,7 @@ public class CUI {
 
     private static final String group_texture = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNWUxYzI0YjEzMmE0Zjk4NmFiOWI5MjViMDk0ZjJkY2UwMGM1YjE2ZGU0ZDdkNDlkMTliMTk3NjRmZmZhNWMxMyJ9fX0=";
     private static final String edit_texture = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjI4ZDk4Y2U0N2ZiNzdmOGI2MDRhNzY2ZGRkMjU0OTIzMjU2NGY5NTYyMjVjNTlmM2UzYjdiODczYTU4YzQifX19";
-    private static final String delete_texture = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzk5YmM3ZGZkM2NhZDcwZWJlMTJmYzM1ZGI2ZmQzZjFkNjUyYzZmZWE5OTI5ZmEzYjIyZmU2ZWVmNWMxIn19fQ==";
+    private static final String minuse_texture = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzk5YmM3ZGZkM2NhZDcwZWJlMTJmYzM1ZGI2ZmQzZjFkNjUyYzZmZWE5OTI5ZmEzYjIyZmU2ZWVmNWMxIn19fQ==";
     private static final String add_texture = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNWM1MjM2NDUyMGIzYTliYjhlZDUxNWMwMWY4MGFiN2I5NzcwMjVjZDBiMGZmNmQ4NjQ2OGE1MTY0YzZmYjc4In19fQ==";
     private static final String rename_texture = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMmFkOGEzYTNiMzZhZGQ1ZDk1NDFhOGVjOTcwOTk2ZmJkY2RlYTk0MTRjZDc1NGM1MGU0OGU1ZDM0ZjFiZjYwYSJ9fX0=";
     private static final String arrow_up = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvN2Q2OTVkMzM1ZTZiZThjYjJhMzRlMDVlMThlYTJkMTJjM2IxN2I4MTY2YmE2MmQ2OTgyYTY0M2RmNzFmZmFjNSJ9fX0=";
@@ -55,7 +54,8 @@ public class CUI {
     private static final String harvest_texture = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjlmOTkxZjFmNzFiM2EzMzFmY2MxMmQ2ZTY0ZGZmMmU3MzdjOTcxZDllODhlOTcwYzc4N2UwZThjZDA2NDA4NiJ9fX0=";
     private static final String hopper_texture = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjhlODRmYTYzMTJlMDViZmY0OGNlZWM3NTBjZTViODUyNjkzOWNlZjYzYjZlZmE3YTUzOWE1YjFkMjVkMDViMCJ9fX0=";
     private static final String creeper_texture = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTE1N2IxNjhjNzM3N2U4NzEzN2VhZDZmNzc4Y2FhZDE4ODM5OTBiNjFiZGQ1NzllMGM2YTljNTFmNWNjZmExZCJ9fX0=";
-
+    private static final String delete_texture = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZGE2M2IwZjU2ZjdlYzY0ZWFjYmI3MWZjYTMxNTQ5ZDAyMjc0MGQ5YjdkNGI2MTc2MmEyZWZlNTg0MWE0YmYyNSJ9fX0=";
+    private static final String present_texture = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYWJkOTg3OTJkZDkyZDk3MTk4OTQzNDFhYzkwMTJhNTg0YzQ0Mjg1NThmZDJjNzEyZjc4ZTVmMGQ0ZGE4NTQ3MCJ9fX0=";
 
     public static void cities_main_page(Player player) {
         List<Area> areas = new ArrayList<>();
@@ -136,7 +136,7 @@ public class CUI {
 
         panel.setButton(7, 0, new ButtonUI(
                 panel,
-                BoundaryMarkerAPI.createSkullByValue(rename_texture),
+                BoundaryMarkerAPI.createSkullByValue(present_texture),
                 "将领地赠与他人") {
             @Override
             public void onClick() {
@@ -147,7 +147,7 @@ public class CUI {
 
         panel.setButton(8, 0, new ButtonUI(
                 panel,
-                BoundaryMarkerAPI.createSkullByValue(rename_texture),
+                BoundaryMarkerAPI.createSkullByValue(delete_texture),
                 "删除此城镇") {
             @Override
             public void onClick() {
@@ -375,7 +375,7 @@ public class CUI {
 
         panel.setButton(7, 3, new ButtonUI(
                 panel,
-                BoundaryMarkerAPI.createSkullByValue(delete_texture),
+                BoundaryMarkerAPI.createSkullByValue(minuse_texture),
                 "删除角色组") {
             @Override
             public void onClick() {
@@ -483,7 +483,7 @@ public class CUI {
 
         panel.setButton(5, 3, new ButtonUI(
                 panel,
-                BoundaryMarkerAPI.createSkullByValue(delete_texture),
+                BoundaryMarkerAPI.createSkullByValue(minuse_texture),
                 "移除玩家") {
             @Override
             public void onClick() {
