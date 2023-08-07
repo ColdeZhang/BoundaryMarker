@@ -1,0 +1,15 @@
+# 修改后不会对已有的界碑生效
+name:
+  line: 1
+  prefix: '#'
+  suffix: '#'
+
+# 修改后不会对已有的界碑生效
+marker_id:
+  line: 2
+  prefix: 'No.'
+  suffix: '*'
+
+max_marks_per_district: 10
+
+debug: false

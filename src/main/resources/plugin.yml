@@ -1,0 +1,15 @@
+name: BoundaryMarker
+version: '${project.version}'
+main: cn.lunadeer.boundarymarker.BoundaryMarker
+api-version: '1.13'
+prefix: BM
+load: STARTUP
+authors: [ZhangYuheng]
+folia-supported: true
+description: Another solution of residence.
+website: https://blog.lunadeer.cn
+commands:
+  BoundaryMarker:
+    description: 界碑系统命令
+    usage: /bm <cmd>
+    aliases: [bm]
