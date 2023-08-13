@@ -1,8 +1,5 @@
 package cn.lunadeer.boundarymarker;
 
-import net.kyori.adventure.text.Component;
-import org.bukkit.ChatColor;
-
 public class XLogger {
     static void info(String msg) {
         msg = "§aINFO : " + msg;

@@ -1,6 +1,7 @@
 package cn.lunadeer.boundarymarker.dto;
 
 import lombok.*;
+import org.bukkit.Location;
 
 import java.util.HashMap;
 import java.util.Map;

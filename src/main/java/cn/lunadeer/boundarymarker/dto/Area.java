@@ -42,5 +42,5 @@ public class Area {
     private Boolean fire_spread = false;        // 行政区域内火是否会蔓延
     private Boolean trample = false;            // 行政区域内农作物是否会被践踏
 
-
+    private Boolean illegal = false;
 }

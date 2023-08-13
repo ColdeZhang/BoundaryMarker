@@ -3,10 +3,7 @@ package cn.lunadeer.boundarymarker.events;
 import cn.lunadeer.boundarymarker.BoundaryMarker;
 import cn.lunadeer.boundarymarker.BoundaryMarkerAPI;
 import cn.lunadeer.boundarymarker.Notification;
-import cn.lunadeer.boundarymarker.dto.Area;
 import cn.lunadeer.boundarymarker.dto.Role;
-import net.kyori.adventure.text.Component;
-import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -16,7 +13,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class PlaceEvent implements Listener {
     @EventHandler

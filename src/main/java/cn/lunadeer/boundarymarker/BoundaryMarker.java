@@ -16,12 +16,10 @@ import de.bluecolored.bluemap.api.markers.MarkerSet;
 import de.bluecolored.bluemap.api.math.Color;
 import de.bluecolored.bluemap.api.math.Shape;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public final class BoundaryMarker extends JavaPlugin {
 
@@ -32,6 +30,16 @@ public final class BoundaryMarker extends JavaPlugin {
         XLogger.info("开始加载 BoundaryMarker");
         config = new Configuration(this);
         cache = Parser.Load();
+
+        // 清理非法区域
+        for (Map.Entry<String, Map<String, Area>> world_areas : cache.getAreas().entrySet()) {
+            for (Map.Entry<String, Area> area : world_areas.getValue().entrySet()) {
+                if (area.getValue().getIllegal()) {
+                    XLogger.warn("清理非法区域: " + area.getKey());
+                    world_areas.getValue().remove(area.getKey());
+                }
+            }
+        }
 
         getServer().getPluginManager().registerEvents(new BlockEvent(), this);
         getServer().getPluginManager().registerEvents(new PlaceEvent(), this);
@@ -69,12 +77,19 @@ public final class BoundaryMarker extends JavaPlugin {
                             double x = vectors.iterator().next().getX();
                             double z = vectors.iterator().next().getY();
                             double y = area.getValue().getY_bottom();
+
+                            Color line = new Color(0, 191, 255, 0.8F);
+                            Color fill = new Color(0, 191, 255, 0.2F);
+                            if (area.getValue().getIllegal()) {
+                                line = new Color(255, 0, 0, 0.8F);
+                                fill = new Color(255, 0, 0, 0.2F);
+                            }
                             ExtrudeMarker marker = ExtrudeMarker.builder()
                                     .label(area.getKey())
                                     .position(x, y, z)
                                     .shape(shape, area.getValue().getY_bottom(), area.getValue().getY_top())
-                                    .lineColor(new Color(0, 191, 255, 0.8F))
-                                    .fillColor(new Color(0, 191, 255, 0.2F))
+                                    .lineColor(line)
+                                    .fillColor(fill)
                                     .build();
                             markerSet.getMarkers()
                                     .put(area.getKey(), marker);
@@ -85,7 +100,7 @@ public final class BoundaryMarker extends JavaPlugin {
                     });
                 }
             });
-        }, 20 * 60);
+        }, 20 * 30);
         XLogger.info("加载完成！");
     }
 
@@ -101,4 +116,5 @@ public final class BoundaryMarker extends JavaPlugin {
     public Map<String, Map<String, ChestUI>> UIs = uiCaches.UIs; // <player, <title, ui>>
     public Map<String, InputHandler> PlayerInput = uiCaches.PlayerInput;
     public Configuration config;
+    public Map<String, Map<Integer, Location>> points = new HashMap<>(); // <player, <index, Location>>
 }

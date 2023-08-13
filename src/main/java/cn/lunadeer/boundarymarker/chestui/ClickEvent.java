@@ -8,7 +8,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryView;
 
-import java.awt.*;
 import java.util.Objects;
 
 public class ClickEvent implements Listener {

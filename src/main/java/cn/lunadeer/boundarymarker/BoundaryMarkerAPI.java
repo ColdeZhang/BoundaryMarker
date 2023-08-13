@@ -5,135 +5,134 @@ import cn.lunadeer.boundarymarker.dto.Cache;
 import cn.lunadeer.boundarymarker.dto.Role;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
 import org.bukkit.block.data.Waterlogged;
-import org.bukkit.block.sign.Side;
-import org.bukkit.block.sign.SignSide;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.plugin.Plugin;
-import org.checkerframework.checker.units.qual.A;
 
 import java.lang.reflect.Field;
 import java.math.BigInteger;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
-import java.util.regex.Pattern;
 
 public class BoundaryMarkerAPI {
     public static BlockFace[] newsfaces = {BlockFace.NORTH, BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST};
     public static BlockFace[] allfaces = {BlockFace.NORTH, BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST, BlockFace.UP, BlockFace.DOWN};
 
-    /**
-     * 判断是否是界碑牌
-     *
-     * @param sign 牌子正面
-     * @return 是否是界碑牌
-     */
-    public static boolean isMarkerSign(SignSide sign) {
-        Configuration conf = BoundaryMarker.instance.config;
-        Integer name_line = conf.name_line();
-        Integer id_line = conf.marker_id_line();
-        String name_prefix = conf.name_prefix();
-        String name_suffix = conf.name_suffix();
-        String id_prefix = conf.marker_id_prefix();
-        String id_suffix = conf.marker_id_suffix();
-        String[] lines = sign.getLines();
-        Pattern name_pattern = Pattern.compile("^" + Pattern.quote(name_prefix) + ".*" + Pattern.quote(name_suffix) + "$");
-        Pattern id_pattern = Pattern.compile("^" + Pattern.quote(id_prefix) + ".*" + Pattern.quote(id_suffix) + "$");
-        return name_pattern.matcher(lines[name_line]).matches() && id_pattern.matcher(lines[id_line]).matches();
-    }
-
-    public static boolean isMarkerSign(Sign sign) {
-        return isMarkerSign(sign.getSide(Side.FRONT));
-    }
-
-    /**
-     * 获取界碑牌设置的边界名
-     * 不会检查是否是界碑牌 应当先使用isMarkerSign判断
-     *
-     * @param sign 界碑牌
-     * @return 边界名 如果匹配失败返回null
-     */
-    public static String getMarkerAreaName(SignSide sign) {
-        Configuration conf = BoundaryMarker.instance.config;
-        Integer name_line = conf.name_line();
-        String name_prefix = conf.name_prefix();
-        String name_suffix = conf.name_suffix();
-        String[] lines = sign.getLines();
-        Pattern name_pattern = Pattern.compile("^" + Pattern.quote(name_prefix) + ".*" + Pattern.quote(name_suffix) + "$");
-        if (name_pattern.matcher(lines[name_line]).matches()) {
-            return lines[name_line].substring(name_prefix.length(), lines[name_line].length() - name_suffix.length());
-        }
-        return null;
-    }
-
-    public static String getMarkerAreaName(Sign sign) {
-        return getMarkerAreaName(sign.getSide(Side.FRONT));
-    }
-
-    /**
-     * 获取界碑牌设置的边界ID
-     * 不会检查是否是界碑牌 应当先使用isMarkerSign判断
-     *
-     * @param sign 界碑牌
-     * @return 边界ID 如果匹配失败返回null
-     */
-    public static Integer getMarkerIndex(SignSide sign) {
-        Configuration conf = BoundaryMarker.instance.config;
-        Integer id_line = conf.marker_id_line();
-        String id_prefix = conf.marker_id_prefix();
-        String id_suffix = conf.marker_id_suffix();
-        String[] lines = sign.getLines();
-        Pattern id_pattern = Pattern.compile("^" + Pattern.quote(id_prefix) + ".*" + Pattern.quote(id_suffix) + "$");
-        if (id_pattern.matcher(lines[id_line]).matches()) {
-            return Integer.parseInt(lines[id_line].substring(id_prefix.length(), lines[id_line].length() - id_suffix.length()));
-        }
-        return null;
-    }
-
-    public static Integer getMarkerIndex(Sign sign) {
-        return getMarkerIndex(sign.getSide(Side.FRONT));
-    }
-
-    /**
-     * 判断是否是木牌
-     *
-     * @param block 方块
-     * @return 是否是木牌
-     */
-    public static boolean isSign(Block block) {
-        return Tag.WALL_SIGNS.isTagged(block.getType());
-    }
-
-    /**
-     * 判断是否是界碑牌的所有者
-     * 不会检查是否是界碑牌 应该先用isMarkerSign检查
-     *
-     * @param sign   界碑牌
-     * @param player 玩家
-     * @return 是否是所有者
-     */
-    public static boolean isOwner(SignSide sign, Player player) {
-        Configuration conf = BoundaryMarker.instance.config;
-        Cache cache = BoundaryMarker.instance.cache;
-        Integer name_line = conf.name_line();
-        String name_prefix = conf.name_prefix();
-        String name_suffix = conf.name_suffix();
-        String name_line_str = sign.getLine(name_line);
-        String name = name_line_str.substring(name_prefix.length(), name_line_str.length() - name_suffix.length());
-        Map<String, Area> areas = cache.getAreas().get(player.getWorld().getName());
-        if (areas.containsKey(name)) {
-            return areas.get(name).getOwner_uuid().equals(player.getUniqueId().toString());
-        }
-        return true;
-    }
+//    /**
+//     * 判断是否是界碑牌
+//     *
+//     * @param sign 牌子正面
+//     * @return 是否是界碑牌
+//     */
+//    public static boolean isMarkerSign(SignSide sign) {
+//        Configuration conf = BoundaryMarker.instance.config;
+//        Integer name_line = conf.name_line();
+//        Integer id_line = conf.marker_id_line();
+//        String name_prefix = conf.name_prefix();
+//        String name_suffix = conf.name_suffix();
+//        String id_prefix = conf.marker_id_prefix();
+//        String id_suffix = conf.marker_id_suffix();
+//        String[] lines = sign.getLines();
+//        Pattern name_pattern = Pattern.compile("^" + Pattern.quote(name_prefix) + ".*" + Pattern.quote(name_suffix) + "$");
+//        Pattern id_pattern = Pattern.compile("^" + Pattern.quote(id_prefix) + ".*" + Pattern.quote(id_suffix) + "$");
+//        return name_pattern.matcher(lines[name_line]).matches() && id_pattern.matcher(lines[id_line]).matches();
+//    }
+//
+//    public static boolean isMarkerSign(Sign sign) {
+//        return isMarkerSign(sign.getSide(Side.FRONT));
+//    }
+//
+//    /**
+//     * 获取界碑牌设置的边界名
+//     * 不会检查是否是界碑牌 应当先使用isMarkerSign判断
+//     *
+//     * @param sign 界碑牌
+//     * @return 边界名 如果匹配失败返回null
+//     */
+//    public static String getMarkerAreaName(SignSide sign) {
+//        Configuration conf = BoundaryMarker.instance.config;
+//        Integer name_line = conf.name_line();
+//        String name_prefix = conf.name_prefix();
+//        String name_suffix = conf.name_suffix();
+//        String[] lines = sign.getLines();
+//        Pattern name_pattern = Pattern.compile("^" + Pattern.quote(name_prefix) + ".*" + Pattern.quote(name_suffix) + "$");
+//        if (name_pattern.matcher(lines[name_line]).matches()) {
+//            return lines[name_line].substring(name_prefix.length(), lines[name_line].length() - name_suffix.length());
+//        }
+//        return null;
+//    }
+//
+//    public static String getMarkerAreaName(Sign sign) {
+//        return getMarkerAreaName(sign.getSide(Side.FRONT));
+//    }
+//
+//    /**
+//     * 获取界碑牌设置的边界ID
+//     * 不会检查是否是界碑牌 应当先使用isMarkerSign判断
+//     *
+//     * @param sign 界碑牌
+//     * @return 边界ID 如果匹配失败返回null
+//     */
+//    public static Integer getMarkerIndex(SignSide sign) {
+//        Configuration conf = BoundaryMarker.instance.config;
+//        Integer id_line = conf.marker_id_line();
+//        String id_prefix = conf.marker_id_prefix();
+//        String id_suffix = conf.marker_id_suffix();
+//        String[] lines = sign.getLines();
+//        Pattern id_pattern = Pattern.compile("^" + Pattern.quote(id_prefix) + ".*" + Pattern.quote(id_suffix) + "$");
+//        if (id_pattern.matcher(lines[id_line]).matches()) {
+//            return Integer.parseInt(lines[id_line].substring(id_prefix.length(), lines[id_line].length() - id_suffix.length()));
+//        }
+//        return null;
+//    }
+//
+//    public static Integer getMarkerIndex(Sign sign) {
+//        return getMarkerIndex(sign.getSide(Side.FRONT));
+//    }
+//
+//    /**
+//     * 判断是否是木牌
+//     *
+//     * @param block 方块
+//     * @return 是否是木牌
+//     */
+//    public static boolean isSign(Block block) {
+//        return Tag.WALL_SIGNS.isTagged(block.getType());
+//    }
+//
+//    /**
+//     * 判断是否是界碑牌的所有者
+//     * 不会检查是否是界碑牌 应该先用isMarkerSign检查
+//     *
+//     * @param sign   界碑牌
+//     * @param player 玩家
+//     * @return 是否是所有者
+//     */
+//    public static boolean isOwner(SignSide sign, Player player) {
+//        Configuration conf = BoundaryMarker.instance.config;
+//        Cache cache = BoundaryMarker.instance.cache;
+//        Integer name_line = conf.name_line();
+//        String name_prefix = conf.name_prefix();
+//        String name_suffix = conf.name_suffix();
+//        String name_line_str = sign.getLine(name_line);
+//        String name = name_line_str.substring(name_prefix.length(), name_line_str.length() - name_suffix.length());
+//        Map<String, Area> areas = cache.getAreas().get(player.getWorld().getName());
+//        if (areas.containsKey(name)) {
+//            return areas.get(name).getOwner_uuid().equals(player.getUniqueId().toString());
+//        }
+//        return true;
+//    }
 
     /**
      * 判断是否是区域的所有者
@@ -156,26 +155,26 @@ public class BoundaryMarkerAPI {
         return false;
     }
 
-    /**
-     * 判断一个方块上是否有界碑牌
-     *
-     * @param block 方块
-     * @return 是否有界碑牌
-     */
-    public static boolean isMarkSignAttachedOn(Block block) {
-        // 查找附近的界碑牌
-        for (BlockFace blockface : allfaces) {
-            Block relativeblock = block.getRelative(blockface);
-            // 如果是界碑牌
-            if (isSign(relativeblock) && isMarkerSign(((Sign) relativeblock.getState()).getSide(Side.FRONT))) {
-                BlockFace sign_face = getFacing(relativeblock);
-                if (sign_face == blockface) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
+//    /**
+//     * 判断一个方块上是否有界碑牌
+//     *
+//     * @param block 方块
+//     * @return 是否有界碑牌
+//     */
+//    public static boolean isMarkSignAttachedOn(Block block) {
+//        // 查找附近的界碑牌
+//        for (BlockFace blockface : allfaces) {
+//            Block relativeblock = block.getRelative(blockface);
+//            // 如果是界碑牌
+//            if (isSign(relativeblock) && isMarkerSign(((Sign) relativeblock.getState()).getSide(Side.FRONT))) {
+//                BlockFace sign_face = getFacing(relativeblock);
+//                if (sign_face == blockface) {
+//                    return true;
+//                }
+//            }
+//        }
+//        return false;
+//    }
 
     /**
      * 创建一个新的区域并配置默认权限组等设置
@@ -254,6 +253,9 @@ public class BoundaryMarkerAPI {
 
         List<Integer> x = new ArrayList<>(area.getMarkers_x().values());
         List<Integer> z = new ArrayList<>(area.getMarkers_z().values());
+        if (x.contains(location_x) || z.contains(location_z)) {
+            return true;
+        }
 
         int n = x.size();
         if (n < 3) {
@@ -288,7 +290,13 @@ public class BoundaryMarkerAPI {
         return null;
     }
 
-    public static List<Area> getAreasByPlayer(Player player) {
+    /**
+     * 获取一个玩家拥有的所有区域
+     *
+     * @param player 玩家
+     * @return 区域列表
+     */
+    public static List<Area> getAreasOfPlayer(Player player) {
         Cache cache = BoundaryMarker.instance.cache;
         List<Area> list = new ArrayList<>();
         for (Map.Entry<String, Map<String, Area>> entry : cache.getAreas().entrySet()) {
@@ -407,6 +415,10 @@ public class BoundaryMarkerAPI {
         for (Map.Entry<String, Area> entry : areas.entrySet()) {
             Area area = entry.getValue();
             if (BoundaryMarkerAPI.isInside(location, area)) {
+                // 如果是非法区域，直接返回true
+                if (area.getIllegal()) {
+                    return true;
+                }
                 if (BoundaryMarkerAPI.isOwner(area, player)) {
                     XLogger.debug("玩家 " + player.getName() + " 是区域 " + area.getName() + " 的所有者");
                     return true;
@@ -515,7 +527,7 @@ public class BoundaryMarkerAPI {
         return head;
     }
 
-    public static ItemStack getPlayerSkull(String uuid){
+    public static ItemStack getPlayerSkull(String uuid) {
         return getPlayerSkull(Bukkit.getPlayer(UUID.fromString(uuid)));
     }
 
@@ -524,5 +536,33 @@ public class BoundaryMarkerAPI {
         String regex = "^[a-zA-Z0-9_]+$";
         return str.matches(regex);
     }
+
+    /**
+     * 检查一个区域是否和已有区域冲突
+     *
+     * @param area 区域
+     * @return 冲突的区域 如果没有冲突则返回null
+     */
+    public static Area conflictCheck(Area area) {
+        SortedMap<Integer, Integer> x = area.getMarkers_x();
+        SortedMap<Integer, Integer> z = area.getMarkers_z();
+        for (Map.Entry<Integer, Integer> entry : x.entrySet()) {
+            int id = entry.getKey();
+            int x1 = x.get(id);
+            int z1 = z.get(id);
+            Location p_b = new Location(Bukkit.getWorld(area.getWorld_name()), x1, area.getY_bottom(), z1);
+            Location p_t = new Location(Bukkit.getWorld(area.getWorld_name()), x1, area.getY_top(), z1);
+            Area a_c = getAreaByLocation(p_b);
+            if (a_c != null && !a_c.getName().equals(area.getName()) && !a_c.getIllegal()) {
+                return a_c;
+            }
+            a_c = getAreaByLocation(p_t);
+            if (a_c != null && !a_c.getName().equals(area.getName()) && !a_c.getIllegal()) {
+                return a_c;
+            }
+        }
+        return null;
+    }
+
 
 }
