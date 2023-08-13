@@ -199,7 +199,7 @@ public class Commands implements TabExecutor {
             } else if (strings[0].equals("area") && strings[2].equals("set")) {
                 return Arrays.asList("y_top", "y_bottom");
             } else if (strings[0].equals("area") && strings[2].equals("role")) {
-                return Arrays.asList("create", "add", "remove", "list");
+                return Arrays.asList("create", "add", "remove", "list", "delete");
             }
             return Collections.emptyList();
         } else if (strings.length == 5) {
