@@ -253,7 +253,7 @@ public class BoundaryMarkerAPI {
 
         List<Integer> x = new ArrayList<>(area.getMarkers_x().values());
         List<Integer> z = new ArrayList<>(area.getMarkers_z().values());
-        if (x.contains(location_x) || z.contains(location_z)) {
+        if (x.contains(location_x) && z.contains(location_z)) {
             return true;
         }
 
