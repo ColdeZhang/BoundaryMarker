@@ -563,6 +563,20 @@ public class BoundaryMarkerAPI {
                 return a_c;
             }
         }
+
+        Map<String, Area> cache = BoundaryMarker.instance.cache.getAreas().get(area.getWorld_name());
+        for (Area a : cache.values()) {
+            for (Map.Entry<Integer, Integer> entry : a.getMarkers_x().entrySet()){
+                int id = entry.getKey();
+                int x1 = x.get(id);
+                int z1 = z.get(id);
+                Location p_b = new Location(Bukkit.getWorld(a.getWorld_name()), x1, a.getY_bottom(), z1);
+                Location p_t = new Location(Bukkit.getWorld(a.getWorld_name()), x1, a.getY_top(), z1);
+                if (BoundaryMarkerAPI.isInside(p_b, area) || BoundaryMarkerAPI.isInside(p_t, area)) {
+                    return a;
+                }
+            }
+        }
         return null;
     }
 
